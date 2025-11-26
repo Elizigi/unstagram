@@ -8,7 +8,7 @@ async function getAllPosts(req: Request, res: Response) {
     if (allPosts.length === 0) {
       return res
         .status(200)
-        .json({ success: true, message: "No posts yet :/" });
+        .json({ success: true, message: "No posts yet :/", allPosts:[]});
     }
     return res.status(200).json({ success: true, allPosts });
   } catch (error) {

@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { infoValidation } from "../../validation/formValidator";
 
-const LoginRegisterFormMV = (setIsLogged: (isLogged: boolean) => void) => {
+const LoginRegisterFormMV = (
+  setIsLogged: (isLogged: boolean) => void,
+  setIsLoginPage: (isLoginPage: boolean) => void
+) => {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState("");
 
@@ -71,6 +74,7 @@ const LoginRegisterFormMV = (setIsLogged: (isLogged: boolean) => void) => {
         return;
       }
       setIsLogged(true);
+      setIsLoginPage(false);
     } catch (error) {
       console.error("Error:", error);
       setError(String(error));

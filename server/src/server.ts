@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import cors from "cors";
 const cookieParser = require("cookie-parser");
-export const saltRounds=process.env.SALT ?? 10;
+export const saltRounds = process.env.SALT ?? 10;
 // Create the Express application
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -39,6 +39,8 @@ export const pool = mysql.createPool({
 
 import userRoutes from "./routes/user/userRoutes";
 app.use("/api/users", userRoutes);
+import postRoutes from "./routes/posts/postsRoutes";
+app.use("/api/posts", postRoutes);
 
 // Start server
 app.listen(PORT, () => {

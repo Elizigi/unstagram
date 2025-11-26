@@ -1,0 +1,13 @@
+.sendPost {
+  position: absolute;
+  top: 6rem;
+  left: 50%;
+  transform: translate(-50%);
+  background-color: white;
+  width: 60vw;
+  height: 20vh;
+  button {
+    background-color: rgb(55, 94, 144);
+    color: white;
+  }
+}

@@ -3,10 +3,11 @@ import styles from "./LoginRegisterForm.module.scss";
 import LoginRegisterFormMV from "./LoginRegisterFormMV";
 interface LoginRegProps {
   setIsLogged: (isLogged: boolean) => void;
+  setIsLoginPage: (isLoginPage: boolean) => void;
 }
-const LoginRegisterForm: FC<LoginRegProps> = ({ setIsLogged }) => {
+const LoginRegisterForm: FC<LoginRegProps> = ({ setIsLogged,setIsLoginPage }) => {
   const { isRegister, setIsRegister, error, checkForm } =
-    LoginRegisterFormMV(setIsLogged);
+    LoginRegisterFormMV(setIsLogged,setIsLoginPage);
   return (
     <div className={styles.formContainer}>
       <button onClick={() => setIsRegister(!isRegister)}>
