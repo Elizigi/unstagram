@@ -1,21 +1,32 @@
 import styles from "./LoginRegisterForm.module.scss";
-import LoginRegisterFormMV from "./loginRegisterFormMV";
+import LoginRegisterFormMV from "./LoginRegisterFormMV";
 const LoginRegisterForm = () => {
-  const { isRegister, setIsRegister } = LoginRegisterFormMV();
+  const { isRegister, setIsRegister, error, checkForm } = LoginRegisterFormMV();
   return (
     <div className={styles.formContainer}>
       <button onClick={() => setIsRegister(!isRegister)}>
         {isRegister ? "Login →" : "← Register"}
       </button>
-      <form onSubmit={() => {}} className={styles.regForm}>
+      <form onSubmit={(e) => checkForm(e)} className={styles.regForm}>
         {isRegister && (
-          <input type="text" name="username" placeholder="username" />
+          <input required type="text" name="username" placeholder="username" />
         )}
-        <input type="email" name="email" placeholder="email" />
-        <input type="password" name="password" placeholder="password" />
+        <input required type="email" name="email" placeholder="email" />
+        <input
+          required
+          type="password"
+          name="password"
+          placeholder="password"
+        />
         {isRegister && (
-          <input type="password" name="password" placeholder="password" />
+          <input
+            required
+            type="password"
+            name="rePassword"
+            placeholder="rePassword"
+          />
         )}
+        <h2>{error}</h2>
         <button type="submit">Submit</button>
       </form>
     </div>

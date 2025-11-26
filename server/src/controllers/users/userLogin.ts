@@ -1,11 +1,18 @@
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 import { pool, SECRET } from "../../server";
+import { infoValidation } from "../validator/infoValidator";
 const jwt = require("jwt-simple");
 
 async function userLogin(req: Request, res: Response) {
   try {
     const { email, password } = req.body;
+    const invalidEmail = infoValidation.isEmailValid(email);
+    const invalidPassword = infoValidation.isPasswordValid(password);
+
+    if (invalidEmail || invalidPassword) {
+      throw new Error("not valid" + invalidEmail + invalidPassword);
+    }
     const [rows] = await pool.execute(
       `SELECT * FROM users WHERE user_email=?`,
       [email]

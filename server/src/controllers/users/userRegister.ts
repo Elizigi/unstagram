@@ -2,14 +2,35 @@ import bcrypt from "bcrypt";
 import mysql from "mysql2/promise";
 import { Request, Response } from "express";
 import { pool, saltRounds } from "../../server";
+import { infoValidation } from "../validator/infoValidator";
 
 async function userRegister(req: Request, res: Response) {
   try {
-    const { username, email, password } = req.body;
-    if (!username || !email || !password) {
-      return res.status(400).json({ message: "All fields are required" });
+    const { username, email, password, rePassword } = req.body;
+    const salt = Number.parseInt(saltRounds as string, 10);
+    const invalidUsername = infoValidation.isNameValid(username);
+    const invalidEmail = infoValidation.isEmailValid(email);
+    const invalidPassword = infoValidation.isPasswordValid(password);
+    const invalidRePassword = infoValidation.isRePasswordValid(
+      rePassword,
+      password
+    );
+
+    if (
+      invalidUsername ||
+      invalidEmail ||
+      invalidPassword ||
+      invalidRePassword
+    ) {
+      throw new Error(
+        "not valid" +
+          invalidUsername +
+          invalidEmail +
+          invalidPassword +
+          invalidRePassword
+      );
     }
-    const hashedPass =await bcrypt.hash(password, saltRounds);
+    const hashedPass = await bcrypt.hash(password, salt);
     const [result] = await pool.execute(
       "INSERT INTO users (user_name,user_email,user_password) VALUES (?,?,?)",
       [username, email, hashedPass]
