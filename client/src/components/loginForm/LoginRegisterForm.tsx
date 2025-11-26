@@ -1,7 +1,12 @@
+import type { FC } from "react";
 import styles from "./LoginRegisterForm.module.scss";
 import LoginRegisterFormMV from "./LoginRegisterFormMV";
-const LoginRegisterForm = () => {
-  const { isRegister, setIsRegister, error, checkForm } = LoginRegisterFormMV();
+interface LoginRegProps {
+  setIsLogged: (isLogged: boolean) => void;
+}
+const LoginRegisterForm: FC<LoginRegProps> = ({ setIsLogged }) => {
+  const { isRegister, setIsRegister, error, checkForm } =
+    LoginRegisterFormMV(setIsLogged);
   return (
     <div className={styles.formContainer}>
       <button onClick={() => setIsRegister(!isRegister)}>
