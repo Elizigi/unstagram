@@ -6,13 +6,14 @@ interface MainProps {
   setIsLoginPage: (isLoginPage: boolean) => void;
 }
 const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
-  const { posts, createPost } = MainMV();
+  const { posts, postStatus, createPost } = MainMV();
   return (
     <div className={styles.mainContainer}>
       <div className={styles.sendPost}>
         {isLogged ? (
           <form onSubmit={(e) => createPost(e)}>
             <div className={styles.textFields}>
+              <h3>{postStatus}</h3>
               <input
                 required
                 type="text"
