@@ -3,8 +3,14 @@
   border-top: 1px solid rgb(171, 171, 171);
   padding-top: 0.8rem;
   .buttonLiked {
-    background-color: aqua;
-    color: rgb(52, 51, 51);
+    font-size: 1.6rem;
+
+    background-color: rgb(11, 40, 40);
+    color: rgb(255, 226, 226);
+    border-color: rgb(5, 21, 37);
+
+    border-radius: 20px;
+    padding: 0 2rem 0.2rem 2rem;
   }
   .likeButton {
     font-size: 1.6rem;

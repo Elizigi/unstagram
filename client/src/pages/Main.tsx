@@ -49,9 +49,9 @@ const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
             {isLogged && (
               <LikeButton
                 likes={post.likes_count}
-                liked={post.liked_by_me}
+                liked={post.liked_by_me as number}
                 likePost={() => likePost(post.post_id)}
-              ></LikeButton>
+              />
             )}
           </div>
         ))}

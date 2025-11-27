@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import style from "./LikeButton.module.scss";
 interface LikeButtonProps {
-  liked?: number;
+  liked: number;
   likes?: number;
   likePost: () => void;
 }
@@ -9,7 +9,9 @@ const LikeButton: FC<LikeButtonProps> = ({ liked, likes, likePost }) => {
   return (
     <div className={style.likeContainer}>
       <button
-        className={`${style.likeButton} ${liked===1 ? style.buttonLiked : ""}`}
+        className={`${
+          Number(liked) === 1 ? style.buttonLiked : style.likeButton
+        }`}
         onClick={() => likePost()}
       >
         Like

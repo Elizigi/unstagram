@@ -42,7 +42,7 @@ const MainMV = () => {
       if (data.success && Array.isArray(data.allPosts)) {
         setPosts([...data.allPosts]);
       }
-      console.log(data);
+      console.log(data.allPosts);
     } catch (error) {
       console.error("Error Occurred", error);
     }
