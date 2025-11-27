@@ -1,24 +1,23 @@
 import { Request, Response } from "express";
 import { pool } from "../../server";
-import mysql from "mysql2/promise";
-
+import { FieldPacket, ResultSetHeader } from "mysql2/promise";
 async function createPost(req: Request, res: Response) {
   try {
-    const { postTitle, postDescription, postUrl } = req.body;
+    const { user_id, postTitle, postDescription, postUrl } = req.body;
     if (!postTitle) {
       throw new Error("Post Title Is Required!");
     }
 
-    const [result] = await pool.execute(
-      "INSERT INTO posts(post_title,post_description,post_img_url)VALUES(?,?,?)",
-      [postTitle, postDescription, postUrl]
+    const [postResult]: [ResultSetHeader, FieldPacket[]] = await pool.execute(
+      "INSERT INTO posts(post_title,post_description,post_img_url,user_id)VALUES(?,?,?,?)",
+      [postTitle, postDescription, postUrl, user_id]
     );
-    const insertResult = result as mysql.ResultSetHeader;
+    const insertResult = postResult.insertId;
 
     res.status(201).json({
       success: true,
-      message: "User registered successfully",
-      userId: insertResult.insertId,
+      message: "Post Created successfully",
+      userId: insertResult,
     });
   } catch (error) {
     console.error("Post error", error);

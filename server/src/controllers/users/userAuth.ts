@@ -21,6 +21,7 @@ async function userAuth(req: Request, res: Response, next: NextFunction) {
       res.status(401).json({ message: "Invalid credentials" });
       return;
     }
+    req.body.userId = decoded.id;
     next();
   } catch (error) {
     console.error("Auth error", error);
