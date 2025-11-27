@@ -39,8 +39,10 @@ const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
       <div className={styles.postsContainer}>
         {[...posts].reverse().map((post) => (
           <div className={styles.post} key={post.post_id + post.post_title}>
-            <h2>{post.post_title}</h2>
-            <img src={post.post_img_url} alt={post.post_title} />
+            <h2 className={styles.postTitle}>{post.post_title}</h2>
+            {post.post_img_url && (
+              <img src={post.post_img_url} alt={post.post_title} />
+            )}
             <p>{post.post_description}</p>
           </div>
         ))}
