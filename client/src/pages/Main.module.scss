@@ -5,9 +5,31 @@
   transform: translate(-50%);
   background-color: white;
   width: 60vw;
-  height: 20vh;
+  height: 24vh;
   button {
     background-color: rgb(55, 94, 144);
     color: white;
+  }
+  .textFields {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    input {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    textarea {
+      font-size: 2rem;
+    }
+  }
+  .urlPost {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    justify-content: space-between;
+    input {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
   }
 }

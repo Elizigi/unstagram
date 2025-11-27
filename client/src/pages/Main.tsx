@@ -12,9 +12,22 @@ const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
       <div className={styles.sendPost}>
         {isLogged ? (
           <form action="">
-            <input type="text" />
-            <textarea name="" id=""></textarea>
-            <input type="url" />
+            <div className={styles.textFields}>
+              <input
+                required
+                type="text"
+                name="title"
+                placeholder="whats on your mind"
+              />
+              <textarea
+                name="description"
+                placeholder="expand on it ?"
+              ></textarea>
+            </div>
+            <div className={styles.urlPost}>
+              <input type="url" name="url" placeholder="img url" />
+              <button type="submit">POST</button>
+            </div>
           </form>
         ) : (
           <div>

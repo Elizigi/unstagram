@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { pool, SECRET } from "../../server";
 const jwt = require("jwt-simple");
 
-async function userAuth(req: Request, res: Response, next: NextFunction) {
+async function userLogged(req: Request, res: Response) {
   try {
     const { token } = req.cookies;
     if (!token) throw new Error("user not logged in ");
@@ -21,7 +21,8 @@ async function userAuth(req: Request, res: Response, next: NextFunction) {
       res.status(401).json({ message: "Invalid credentials" });
       return;
     }
-    next();
+    const singleUser = users[0];
+    res.status(200).json({ message: "user logged in", user: singleUser });
   } catch (error) {
     console.error("Auth error", error);
     res.status(500).json({
@@ -31,4 +32,4 @@ async function userAuth(req: Request, res: Response, next: NextFunction) {
     });
   }
 }
-export default userAuth;
+export default userLogged;
