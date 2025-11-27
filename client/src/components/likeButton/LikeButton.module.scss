@@ -1,0 +1,18 @@
+.likeContainer {
+  display: flex;
+  border-top: 1px solid rgb(171, 171, 171);
+  padding-top: 0.8rem;
+  .buttonLiked {
+    background-color: aqua;
+    color: rgb(52, 51, 51);
+  }
+  .likeButton {
+    font-size: 1.6rem;
+    color: rgb(255, 255, 255);
+    background-color: rgb(24, 98, 171);
+
+    border-color: rgb(14, 61, 107);
+    border-radius: 20px;
+    padding: 0 2rem 0.2rem 2rem;
+  }
+}

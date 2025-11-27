@@ -3,4 +3,6 @@ export interface Post {
   post_title: string;
   post_description?: string;
   post_img_url?: string;
+  likes_count?: number;
+  liked_by_me?: number;
 }

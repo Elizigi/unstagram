@@ -1,7 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { pool, SECRET } from "../../server";
 const jwt = require("jwt-simple");
-
+declare module "express-serve-static-core" {
+  interface Request {
+    userId?: number;
+  }
+}
 async function userAuth(req: Request, res: Response, next: NextFunction) {
   try {
     const { token } = req.cookies;
@@ -21,7 +25,7 @@ async function userAuth(req: Request, res: Response, next: NextFunction) {
       res.status(401).json({ message: "Invalid credentials" });
       return;
     }
-    req.body.userId = decoded.user_id;
+    req.userId = decoded.user_id;
     next();
   } catch (error) {
     console.error("Auth error", error);

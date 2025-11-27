@@ -13,15 +13,39 @@ const MainMV = () => {
     return () => clearTimeout(timer);
   }, [postStatus]);
   const fetchPosts = async () => {
-    const response = await fetch(
-      "http://localhost:3000/api/posts/post-getall",
-      { credentials: "include" }
-    );
-    const data = await response.json();
-    if (data.success && Array.isArray(data.allPosts)) {
-      setPosts([...data.allPosts]);
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/posts/post-getall",
+        { credentials: "include" }
+      );
+      const data = await response.json();
+      if (data.success && Array.isArray(data.allPosts)) {
+        setPosts([...data.allPosts]);
+      }
+      console.log(data);
+    } catch (error) {
+      console.error("Error Occurred", error);
     }
-    console.log(data);
+  };
+  const likePost = async (postId: number) => {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/posts/post-like",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ postId }),
+        }
+      );
+      const data = await response.json();
+      if (data.success && Array.isArray(data.allPosts)) {
+        setPosts([...data.allPosts]);
+      }
+      console.log(data);
+    } catch (error) {
+      console.error("Error Occurred", error);
+    }
   };
   const createPost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -61,7 +85,7 @@ const MainMV = () => {
       setPostStatus("Error Creating Post");
     }
   };
-  return { posts, postStatus, createPost };
+  return { posts, postStatus, createPost, likePost };
 };
 
 export default MainMV;

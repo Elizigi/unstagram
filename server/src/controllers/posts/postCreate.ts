@@ -3,7 +3,8 @@ import { pool } from "../../server";
 import { FieldPacket, ResultSetHeader } from "mysql2/promise";
 async function createPost(req: Request, res: Response) {
   try {
-    const { userId, postTitle, postDescription, postUrl } = req.body;
+    const { postTitle, postDescription, postUrl } = req.body;
+    const userId = req.userId;
     if (!postTitle) {
       throw new Error("Post Title Is Required!");
     }

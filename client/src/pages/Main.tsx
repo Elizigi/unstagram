@@ -1,12 +1,13 @@
 import type { FC } from "react";
 import styles from "./Main.module.scss";
 import MainMV from "./MainMV";
+import LikeButton from "../components/likeButton/LikeButton";
 interface MainProps {
   isLogged: boolean;
   setIsLoginPage: (isLoginPage: boolean) => void;
 }
 const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
-  const { posts, postStatus, createPost } = MainMV();
+  const { posts, postStatus, createPost, likePost } = MainMV();
   return (
     <div className={styles.mainContainer}>
       <div className={styles.sendPost}>
@@ -45,6 +46,11 @@ const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
               <img src={post.post_img_url} alt={post.post_title} />
             )}
             <p>{post.post_description}</p>
+            <LikeButton
+              likes={post.likes_count}
+              liked={post.liked_by_me}
+              likePost={() => likePost(post.post_id)}
+            ></LikeButton>
           </div>
         ))}
       </div>
