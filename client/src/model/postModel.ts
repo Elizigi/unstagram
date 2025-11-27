@@ -1,6 +1,6 @@
 export interface Post {
-  postId: string;
-  postTitle: string;
-  postDescription?: string;
-  postUrl?: string;
+  post_id: number;
+  post_title: string;
+  post_description?: string;
+  post_img_url?: string;
 }

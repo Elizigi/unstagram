@@ -6,12 +6,12 @@ interface MainProps {
   setIsLoginPage: (isLoginPage: boolean) => void;
 }
 const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
-  const { posts } = MainMV();
+  const { posts, createPost } = MainMV();
   return (
     <div className={styles.mainContainer}>
       <div className={styles.sendPost}>
         {isLogged ? (
-          <form action="">
+          <form onSubmit={(e) => createPost(e)}>
             <div className={styles.textFields}>
               <input
                 required
@@ -37,11 +37,11 @@ const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
         )}
       </div>
       <div className={styles.postsContainer}>
-        {posts.map((post) => (
-          <div className={styles.post} key={post.postId + post.postTitle}>
-            <h2>{post.postTitle}</h2>
-            <img src={post.postUrl} alt={post.postTitle} />
-            <p>{post.postDescription}</p>
+        {[...posts].reverse().map((post) => (
+          <div className={styles.post} key={post.post_id + post.post_title}>
+            <h2>{post.post_title}</h2>
+            <img src={post.post_img_url} alt={post.post_title} />
+            <p>{post.post_description}</p>
           </div>
         ))}
       </div>
