@@ -46,11 +46,13 @@ const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
               <img src={post.post_img_url} alt={post.post_title} />
             )}
             <p>{post.post_description}</p>
-            <LikeButton
-              likes={post.likes_count}
-              liked={post.liked_by_me}
-              likePost={() => likePost(post.post_id)}
-            ></LikeButton>
+            {isLogged && (
+              <LikeButton
+                likes={post.likes_count}
+                liked={post.liked_by_me}
+                likePost={() => likePost(post.post_id)}
+              ></LikeButton>
+            )}
           </div>
         ))}
       </div>
