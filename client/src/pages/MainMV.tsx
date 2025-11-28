@@ -29,15 +29,10 @@ const MainMV = () => {
   };
 
   const likePost = async (postId: number) => {
+    const oldPosts = [...posts];
     try {
       const updatedPosts = posts.map((post) => {
         if (post.post_id !== postId) return post;
-
-        console.log("BEFORE UPDATE:", {
-          postId: post.post_id,
-          liked_by_me: post.liked_by_me,
-          likes_count: post.likes_count,
-        });
 
         const isLiked = Number(post.liked_by_me) === 1;
         const newLikesCount = post.likes_count ?? 0;
@@ -47,12 +42,6 @@ const MainMV = () => {
           liked_by_me: isLiked ? 0 : 1,
           likes_count: isLiked ? newLikesCount - 1 : newLikesCount + 1,
         };
-
-        console.log("AFTER UPDATE:", {
-          postId: updated.post_id,
-          liked_by_me: updated.liked_by_me,
-          likes_count: updated.likes_count,
-        });
 
         return updated;
       });
@@ -67,12 +56,12 @@ const MainMV = () => {
         }
       );
       const data = await response.json();
-      if (data.success && Array.isArray(data.allPosts)) {
-        setPosts([...data.allPosts]);
+      if (!data.success) {
+        setPosts(oldPosts);
       }
-      console.log(data.allPosts);
     } catch (error) {
       console.error("Error Occurred", error);
+      setPosts(oldPosts);
     }
   };
   const createPost = (e: React.FormEvent<HTMLFormElement>) => {
