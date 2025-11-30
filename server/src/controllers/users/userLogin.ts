@@ -29,7 +29,11 @@ async function userLogin(req: Request, res: Response) {
       return;
     }
     const token = jwt.encode({ user_id: user.user_id }, SECRET);
-    res.cookie("token", token, { httpOnly: true, secure: false });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
     res.status(200).json({ success: true, message: "Login successful" });
   } catch (error) {
     console.error("login error", error);
