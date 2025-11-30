@@ -7,9 +7,10 @@ interface MainProps {
   setIsLoginPage: (isLoginPage: boolean) => void;
 }
 const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
-  const { posts, postStatus, createPost, likePost } = MainMV();
+  const { posts, postStatus, createPost, likePost, logOut } = MainMV();
   return (
     <div className={styles.mainContainer}>
+      <button onClick={logOut}>Logout</button>
       <div className={styles.sendPost}>
         {isLogged ? (
           <form onSubmit={(e) => createPost(e)}>

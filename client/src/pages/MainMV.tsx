@@ -102,7 +102,21 @@ const MainMV = () => {
       setPostStatus("Error Creating Post");
     }
   };
-  return { posts, postStatus, createPost, likePost };
+
+  const logOut = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/users/user-logout",
+        { credentials: "include" }
+      );
+      const data = await response.json();
+      console.log(data);
+      if (data.success) globalThis.location.reload();
+    } catch (error) {
+      console.error("Error logging out", error);
+    }
+  };
+  return { posts, postStatus, createPost, likePost, logOut };
 };
 
 export default MainMV;
