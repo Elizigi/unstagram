@@ -20,15 +20,15 @@ const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
                 required
                 type="text"
                 name="title"
-                placeholder="whats on your mind"
+                placeholder=" whats on your mind"
               />
               <textarea
                 name="description"
-                placeholder="expand on it ?"
+                placeholder=" expand on it ?"
               ></textarea>
             </div>
             <div className={styles.urlPost}>
-              <input type="url" name="url" placeholder="img url" />
+              <input type="url" name="url" placeholder=" img url" />
               <button type="submit">POST</button>
             </div>
           </form>
