@@ -42,6 +42,10 @@ const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
       <div className={styles.postsContainer}>
         {[...posts].reverse().map((post) => (
           <div className={styles.post} key={post.post_id + post.post_title}>
+            <div className={styles.postCreator}>
+              <h3>{post.user_name}</h3>
+              <div className={styles.fakeImg}></div>
+            </div>
             <h2 className={styles.postTitle}>{post.post_title}</h2>
             {post.post_img_url && (
               <img src={post.post_img_url} alt={post.post_title} />

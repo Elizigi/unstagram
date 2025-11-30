@@ -19,12 +19,14 @@ async function getAllPosts(req: Request, res: Response) {
     }
     const [posts] = await pool.execute<RowDataPacket[]>(
       `SELECT 
-      p.*,
+      posts.*,
+       users.user_name,
       COUNT(pl.user_id) AS likes_count,
       SUM(pl.user_id = ?) AS liked_by_me
-   FROM posts p
-   LEFT JOIN post_likes pl ON p.post_id = pl.post_id
-   GROUP BY p.post_id;`,
+   FROM posts
+   LEFT JOIN post_likes pl ON posts.post_id = pl.post_id
+   LEFT JOIN users ON posts.user_id = users.user_id
+   GROUP BY posts.post_id;`,
       [userId]
     );
     if (posts.length === 0) {
