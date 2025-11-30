@@ -2,15 +2,19 @@ import type { FC } from "react";
 import styles from "./Main.module.scss";
 import MainMV from "./MainMV";
 import LikeButton from "../components/likeButton/LikeButton";
+import { useGlobal } from "../hooks/useGlobal";
 interface MainProps {
   isLogged: boolean;
   setIsLoginPage: (isLoginPage: boolean) => void;
 }
 const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
   const { posts, postStatus, createPost, likePost, logOut } = MainMV();
+  const { userId } = useGlobal();
   return (
     <div className={styles.mainContainer}>
-      <button onClick={logOut} className={styles.logOutBtn}>Logout</button>
+      <button onClick={logOut} className={styles.logOutBtn}>
+        Logout
+      </button>
       <div className={styles.sendPost}>
         {isLogged ? (
           <form onSubmit={(e) => createPost(e)}>
@@ -44,7 +48,13 @@ const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
           <div className={styles.post} key={post.post_id + post.post_title}>
             <div className={styles.postCreator}>
               <div className={styles.fakeImg}></div>
+
               <h3>{post.user_name}</h3>
+              {Number(userId) === Number(post.user_id) ? (
+                <button className={styles.deleteBtn}>Too Cringe</button>
+              ) : (
+                ""
+              )}
             </div>
             <h2 className={styles.postTitle}>{post.post_title}</h2>
             {post.post_img_url && (

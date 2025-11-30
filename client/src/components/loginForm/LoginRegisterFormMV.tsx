@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { infoValidation } from "../../validation/formValidator";
+import { useGlobal } from "../../hooks/useGlobal";
 
 const LoginRegisterFormMV = (
   setIsLogged: (isLogged: boolean) => void,
@@ -7,6 +8,8 @@ const LoginRegisterFormMV = (
 ) => {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState("");
+
+  const { setUserId } = useGlobal();
 
   const checkLogin = (email: string, password: string) => {
     const invalidEmail = infoValidation.isEmailValid(email);
@@ -32,7 +35,9 @@ const LoginRegisterFormMV = (
   const checkForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
-    const data = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+
+    const data = new FormData(form);
     const username = data.get("username") as string;
     const email = data.get("email") as string;
     const password = data.get("password") as string;
@@ -44,14 +49,15 @@ const LoginRegisterFormMV = (
       setError("not valid" + invalidInput);
       return;
     }
-    sendReq(username, email, password, rePassword);
+    sendReq(username, email, password, rePassword, form);
   };
 
   const sendReq = async (
     username: string,
     email: string,
     password: string,
-    rePassword: string
+    rePassword: string,
+    form: EventTarget & HTMLFormElement
   ) => {
     try {
       const endpoint = isRegister ? "register" : "login";
@@ -70,9 +76,11 @@ const LoginRegisterFormMV = (
       }
       console.log(data);
       if (isRegister) {
+        form.reset();
         setIsRegister(false);
         return;
       }
+      setUserId(data.user_id);
       setIsLogged(true);
       setIsLoginPage(false);
     } catch (error) {

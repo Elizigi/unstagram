@@ -39,6 +39,11 @@
     }
   }
 }
+.deleteBtn {
+  background-color: rgb(231, 3, 3);
+  color: white;
+  padding: 0.5rem;
+}
 .logOutBtn {
   position: fixed;
   top: 1rem;
@@ -71,6 +76,7 @@
         padding: 0;
         font-size: 1.3rem;
         font-weight: 450;
+        flex: 1;
       }
     }
     .postTitle {
