@@ -10,7 +10,7 @@ const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
   const { posts, postStatus, createPost, likePost, logOut } = MainMV();
   return (
     <div className={styles.mainContainer}>
-      <button onClick={logOut}>Logout</button>
+      <button onClick={logOut} className={styles.logOutBtn}>Logout</button>
       <div className={styles.sendPost}>
         {isLogged ? (
           <form onSubmit={(e) => createPost(e)}>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import LoginRegisterForm from "./components/loginForm/LoginRegisterForm";
 import Main from "./pages/Main";
+import Logo from "./components/logo/Logo";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
@@ -27,6 +28,7 @@ function App() {
   }, []);
   return (
     <>
+    <Logo></Logo>
       {isLoginPage && (
         <LoginRegisterForm
           setIsLoginPage={setIsLoginPage}
