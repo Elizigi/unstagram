@@ -74,7 +74,6 @@ const LoginRegisterFormMV = (
       if (!data.success) {
         throw new Error("Error:", data.message);
       }
-      console.log(data);
       if (isRegister) {
         form.reset();
         setIsRegister(false);

@@ -116,7 +116,27 @@ const MainMV = () => {
       console.error("Error logging out", error);
     }
   };
-  return { posts, postStatus, createPost, likePost, logOut };
+  const deletePost = async (post_id: number) => {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/posts/post-delete",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ post_id }),
+        }
+      );
+      const data = await response.json();
+      if (!data.success) {
+        throw new Error("something went wrong deleting post");
+      }
+      fetchPosts();
+    } catch (error) {
+      console.error("Error deleting post", error);
+    }
+  };
+  return { posts, postStatus, createPost, likePost, logOut,deletePost };
 };
 
 export default MainMV;

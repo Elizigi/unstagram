@@ -8,7 +8,8 @@ interface MainProps {
   setIsLoginPage: (isLoginPage: boolean) => void;
 }
 const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
-  const { posts, postStatus, createPost, likePost, logOut } = MainMV();
+  const { posts, postStatus, createPost, likePost, logOut, deletePost } =
+    MainMV();
   const { userId } = useGlobal();
   return (
     <div className={styles.mainContainer}>
@@ -51,7 +52,12 @@ const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
 
               <h3>{post.user_name}</h3>
               {Number(userId) === Number(post.user_id) ? (
-                <button className={styles.deleteBtn}>Too Cringe</button>
+                <button
+                  className={styles.deleteBtn}
+                  onClick={() => deletePost(Number(post.post_id))}
+                >
+                  Too Cringe
+                </button>
               ) : (
                 ""
               )}
