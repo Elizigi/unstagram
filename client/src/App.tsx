@@ -3,11 +3,12 @@ import "./App.css";
 import LoginRegisterForm from "./components/loginForm/LoginRegisterForm";
 import Main from "./pages/Main";
 import Logo from "./components/logo/Logo";
+import { useGlobal } from "./hooks/useGlobal";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
   const [isLoginPage, setIsLoginPage] = useState(false);
-
+  const { setUserId } = useGlobal();
   useEffect(() => {
     const checkUserAuth = async () => {
       try {
@@ -16,8 +17,9 @@ function App() {
           { credentials: "include" }
         );
         const data = await response.json();
-        if (data.user) {
+        if (data.user_id) {
           setIsLogged(true);
+          setUserId(data.user_id);
         }
       } catch (error) {
         console.error("something went wrong", error);
@@ -25,10 +27,11 @@ function App() {
     };
 
     checkUserAuth();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>
-    <Logo></Logo>
+      <Logo></Logo>
       {isLoginPage && (
         <LoginRegisterForm
           setIsLoginPage={setIsLoginPage}

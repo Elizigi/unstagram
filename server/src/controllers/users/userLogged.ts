@@ -22,7 +22,9 @@ async function userLogged(req: Request, res: Response) {
       return;
     }
     const singleUser = users[0];
-    res.status(200).json({ message: "user logged in", user: singleUser });
+    res
+      .status(200)
+      .json({ message: "user logged in", user_id: singleUser.user_id });
   } catch (error) {
     console.error("Auth error", error);
     res.status(500).json({
