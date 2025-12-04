@@ -8,7 +8,7 @@ interface MainProps {
   setIsLoginPage: (isLoginPage: boolean) => void;
 }
 const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
-  const { posts, postStatus, createPost, likePost, logOut, deletePost } =
+  const { posts, postStatus, createPost, likePost, logOut, deletePost,followUser } =
     MainMV();
   const { userId } = useGlobal();
   return (
@@ -59,11 +59,11 @@ const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
                   Too Cringe
                 </button>
               ) : (
-                  <button
+                <button
                   className={styles.followBtn}
-                  onClick={() => deletePost(Number(post.post_id))}
+                  onClick={() => followUser(Number(post.user_id))}
                 >
-                  {post.follow_user?"unfollow":"Follow"}
+                  {post.follow_user ? "unfollow" : "Follow"}
                 </button>
               )}
             </div>

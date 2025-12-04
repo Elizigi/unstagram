@@ -116,6 +116,27 @@ const MainMV = () => {
       console.error("Error logging out", error);
     }
   };
+  const followUser = async (followed_id: number) => {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/users/follow-user",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ followed_id }),
+        }
+      );
+      const data = await response.json();
+      if (!data.success) {
+        throw new Error("something went wrong deleting post");
+      }
+      fetchPosts();
+    } catch (error) {
+      console.error("Error deleting post", error);
+    }
+  };
+
   const deletePost = async (post_id: number) => {
     try {
       const response = await fetch(
@@ -136,7 +157,15 @@ const MainMV = () => {
       console.error("Error deleting post", error);
     }
   };
-  return { posts, postStatus, createPost, likePost, logOut,deletePost };
+  return {
+    posts,
+    postStatus,
+    createPost,
+    likePost,
+    logOut,
+    deletePost,
+    followUser,
+  };
 };
 
 export default MainMV;
