@@ -51,6 +51,10 @@ const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
           </div>
         )}
       </div>
+      <div className={styles.discoverFollow}>
+        <button>Discover</button>
+        <button>Following</button>
+      </div>
       <div className={styles.postsContainer}>
         {[...posts].reverse().map((post) => (
           <div className={styles.post} key={post.post_id + post.post_title}>

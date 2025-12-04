@@ -39,6 +39,22 @@
     }
   }
 }
+.discoverFollow {
+  margin-top: 40vh;
+  button {
+    color: black;
+    width: 50%;
+    border-radius: 0;
+    background-color: transparent;
+    border: none;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+  }
+  .selectedBtn {
+    background-color: beige;
+  }
+}
 .deleteBtn {
   background-color: rgb(231, 3, 3);
   color: white;
@@ -60,7 +76,7 @@
   color: white;
 }
 .postsContainer {
-  margin-top: 40vh;
+  margin-top: 4vh;
   .post {
     background-color: white;
     padding: 1rem;
