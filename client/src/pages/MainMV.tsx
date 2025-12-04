@@ -119,7 +119,7 @@ const MainMV = () => {
   const followUser = async (followed_id: number) => {
     try {
       const response = await fetch(
-        "http://localhost:3000/api/users/follow-user",
+        "http://localhost:3000/api/users/user-follow",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
