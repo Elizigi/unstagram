@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import type { Post } from "../model/postModel";
-
+const currentTabOptions = {
+  following: "following",
+  discover: "discover",
+} as const;
+type CurrentTab = (typeof currentTabOptions)[keyof typeof currentTabOptions];
 const MainMV = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [postStatus, setPostStatus] = useState("");
+  const [currentTab, setCurrentTab] = useState<CurrentTab>(
+    currentTabOptions.discover
+  );
 
   useEffect(() => {
     fetchPosts();
