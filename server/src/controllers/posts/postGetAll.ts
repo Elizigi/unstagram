@@ -18,16 +18,24 @@ async function getAllPosts(req: Request, res: Response) {
       return res.status(200).json({ success: true, allPosts });
     }
     const [posts] = await pool.execute<RowDataPacket[]>(
-      `SELECT 
-      posts.*,
-       users.user_name,
-      COUNT(pl.user_id) AS likes_count,
-      SUM(pl.user_id = ?) AS liked_by_me
-   FROM posts
-   LEFT JOIN post_likes pl ON posts.post_id = pl.post_id
-   LEFT JOIN users ON posts.user_id = users.user_id
-   GROUP BY posts.post_id;`,
-      [userId]
+      `
+  SELECT
+    posts.*,
+    users.user_name,
+    COUNT(pl.user_id) AS likes_count,
+    SUM(pl.user_id = ?) AS liked_by_me,
+    MAX(uf.follower_id IS NOT NULL) AS is_followed_by_me
+  FROM posts
+  LEFT JOIN post_likes pl
+    ON posts.post_id = pl.post_id
+  LEFT JOIN users
+    ON posts.user_id = users.user_id
+  LEFT JOIN user_followers uf
+    ON uf.user_id = posts.user_id
+   AND uf.follower_id = ?
+  GROUP BY posts.post_id;
+  `,
+      [userId, userId]
     );
     if (posts.length === 0) {
       return res

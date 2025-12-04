@@ -14,21 +14,21 @@ async function followUser(req: Request, res: Response) {
       [followed_id, userId]
     );
     if (foundPost.length === 0) {
-      const likeCreated = await pool.execute<RowDataPacket[]>(
+      const followCreated = await pool.execute<RowDataPacket[]>(
         "INSERT INTO user_followers(user_id,follower_id)VALUES(?,?)",
         [followed_id, userId]
       );
       return res
         .status(201)
-        .json({ success: true, message: "liked", post: likeCreated });
+        .json({ success: true, message: "followed", post: followCreated });
     } else {
-      const unlikePost = await pool.execute<RowDataPacket[]>(
+      const unfollow = await pool.execute<RowDataPacket[]>(
         "DELETE FROM user_followers WHERE user_id=? AND follower_id=?",
         [followed_id, userId]
       );
       res
         .status(200)
-        .json({ success: true, message: "unlike successfully", unlikePost });
+        .json({ success: true, message: "unfollowed successfully", unfollow });
     }
   } catch (error) {
     console.error("error following user", error);
