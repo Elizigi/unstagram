@@ -11,7 +11,11 @@ const MainMV = () => {
   const [currentTab, setCurrentTab] = useState<CurrentTab>(
     currentTabOptions.discover
   );
-
+  useEffect(() => {
+    if (currentTab === currentTabOptions.discover) {
+      fetchPosts();
+    }
+  }, [currentTab]);
   useEffect(() => {
     fetchPosts();
   }, []);
@@ -167,11 +171,14 @@ const MainMV = () => {
   return {
     posts,
     postStatus,
+    currentTab,
+    currentTabOptions,
     createPost,
     likePost,
     logOut,
     deletePost,
     followUser,
+    setCurrentTab,
   };
 };
 

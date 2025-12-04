@@ -11,11 +11,14 @@ const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
   const {
     posts,
     postStatus,
+    currentTab,
+    currentTabOptions,
     createPost,
     likePost,
     logOut,
     deletePost,
     followUser,
+    setCurrentTab,
   } = MainMV();
   const { userId } = useGlobal();
   return (
@@ -52,8 +55,22 @@ const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
         )}
       </div>
       <div className={styles.discoverFollow}>
-        <button>Discover</button>
-        <button>Following</button>
+        <button
+          className={
+            currentTab === currentTabOptions.discover ? styles.selectedBtn : ""
+          }
+          onClick={() => setCurrentTab(currentTabOptions.discover)}
+        >
+          Discover
+        </button>
+        <button
+          className={
+            currentTab === currentTabOptions.following ? styles.selectedBtn : ""
+          }
+          onClick={() => setCurrentTab(currentTabOptions.following)}
+        >
+          Following
+        </button>
       </div>
       <div className={styles.postsContainer}>
         {[...posts].reverse().map((post) => (
