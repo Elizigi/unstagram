@@ -59,7 +59,12 @@ const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
                   Too Cringe
                 </button>
               ) : (
-                ""
+                  <button
+                  className={styles.followBtn}
+                  onClick={() => deletePost(Number(post.post_id))}
+                >
+                  {post.follow_user?"unfollow":"Follow"}
+                </button>
               )}
             </div>
             <h2 className={styles.postTitle}>{post.post_title}</h2>
