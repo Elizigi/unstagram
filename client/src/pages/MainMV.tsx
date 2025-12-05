@@ -15,6 +15,9 @@ const MainMV = () => {
     if (currentTab === currentTabOptions.discover) {
       fetchPosts();
     }
+    else{
+      fetchFollowed()
+    }
   }, [currentTab]);
   useEffect(() => {
     fetchPosts();
@@ -38,7 +41,21 @@ const MainMV = () => {
       console.error("Error Occurred", error);
     }
   };
-
+ const fetchFollowed = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/posts/post-followed",
+        { credentials: "include" }
+      );
+      const data = await response.json();
+      if (data.success && Array.isArray(data.allPosts)) {
+        setPosts([...data.allPosts]);
+      }
+      console.log(data);
+    } catch (error) {
+      console.error("Error Occurred", error);
+    }
+  };
   const likePost = async (postId: number) => {
     const oldPosts = [...posts];
     try {
