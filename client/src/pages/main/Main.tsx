@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import styles from "./Main.module.scss";
 import MainMV from "./MainMV";
-import LikeButton from "../components/likeButton/LikeButton";
-import { useGlobal } from "../hooks/useGlobal";
+import LikeButton from "../../components/likeButton/LikeButton";
+import { useGlobal } from "../../hooks/useGlobal";
 interface MainProps {
   isLogged: boolean;
   setIsLoginPage: (isLoginPage: boolean) => void;

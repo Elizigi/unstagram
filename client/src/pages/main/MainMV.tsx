@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { Post } from "../model/postModel";
+import type { Post } from "../../model/postModel";
 const currentTabOptions = {
   following: "following",
   discover: "discover",

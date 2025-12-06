@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import LoginRegisterForm from "./components/loginForm/LoginRegisterForm";
-import Main from "./pages/Main";
+import Main from "./pages/main/Main";
 import Logo from "./components/logo/Logo";
 import { useGlobal } from "./hooks/useGlobal";
 
