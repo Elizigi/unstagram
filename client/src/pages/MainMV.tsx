@@ -14,9 +14,8 @@ const MainMV = () => {
   useEffect(() => {
     if (currentTab === currentTabOptions.discover) {
       fetchPosts();
-    }
-    else{
-      fetchFollowed()
+    } else {
+      fetchFollowed();
     }
   }, [currentTab]);
   useEffect(() => {
@@ -41,7 +40,7 @@ const MainMV = () => {
       console.error("Error Occurred", error);
     }
   };
- const fetchFollowed = async () => {
+  const fetchFollowed = async () => {
     try {
       const response = await fetch(
         "http://localhost:3000/api/posts/post-followed",
@@ -158,6 +157,10 @@ const MainMV = () => {
       const data = await response.json();
       if (!data.success) {
         throw new Error("something went wrong deleting post");
+      }
+      if (currentTab === currentTabOptions.following) {
+        fetchFollowed();
+        return;
       }
       fetchPosts();
     } catch (error) {

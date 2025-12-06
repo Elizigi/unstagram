@@ -91,7 +91,7 @@ const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
                   className={styles.followBtn}
                   onClick={() => followUser(Number(post.user_id))}
                 >
-                  {post.is_followed_by_me ? "unfollow" : "Follow"}
+                  {post.is_followed_by_me || currentTab === currentTabOptions.following? "unfollow" : "Follow"}
                 </button>
               )}
             </div>
