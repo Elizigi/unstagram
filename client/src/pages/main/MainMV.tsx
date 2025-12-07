@@ -5,7 +5,7 @@ const currentTabOptions = {
   discover: "discover",
 } as const;
 type CurrentTab = (typeof currentTabOptions)[keyof typeof currentTabOptions];
-const MainMV = () => {
+const MainMV = (setProfileId: (profileId: number) => void) => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [postStatus, setPostStatus] = useState("");
   const [currentTab, setCurrentTab] = useState<CurrentTab>(
@@ -20,6 +20,10 @@ const MainMV = () => {
   }, [currentTab]);
   useEffect(() => {
     fetchPosts();
+  }, []);
+  useEffect(() => {
+    setProfileId(-1);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     const timer = setTimeout(() => setPostStatus(""), 5000);

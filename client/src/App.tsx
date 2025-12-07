@@ -10,6 +10,7 @@ import UserProfile from "./pages/userProfile/UserProfile";
 function App() {
   const [isLogged, setIsLogged] = useState(false);
   const [pageSelected, setPageSelected] = useState<PageType>(pageTypes.home);
+  const [profileId, setProfileId] = useState(-1);
 
   const { setUserId } = useGlobal();
   useEffect(() => {
@@ -32,6 +33,11 @@ function App() {
     checkUserAuth();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  useEffect(() => {
+    if (profileId >= 0) {
+      setPageSelected(pageTypes.profile);
+    }
+  }, [profileId]);
   return (
     <>
       <Logo></Logo>
@@ -42,9 +48,9 @@ function App() {
         />
       )}
       {pageSelected === pageTypes.home && (
-        <Main isLogged={isLogged} setPage={setPageSelected} />
+        <Main isLogged={isLogged} setPage={setPageSelected} setProfileId={setProfileId}/>
       )}
-      {pageSelected === pageTypes.profile && <UserProfile userId={1} />}
+      {pageSelected === pageTypes.profile && <UserProfile userId={profileId} />}
     </>
   );
 }

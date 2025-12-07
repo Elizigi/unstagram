@@ -7,8 +7,9 @@ import { pageTypes, type PageType } from "../../model/pageTypes";
 interface MainProps {
   isLogged: boolean;
   setPage: (page: PageType) => void;
+  setProfileId: (profileId: number) => void;
 }
-const Main: FC<MainProps> = ({ isLogged, setPage }) => {
+const Main: FC<MainProps> = ({ isLogged, setPage, setProfileId }) => {
   const {
     posts,
     postStatus,
@@ -20,7 +21,7 @@ const Main: FC<MainProps> = ({ isLogged, setPage }) => {
     deletePost,
     followUser,
     setCurrentTab,
-  } = MainMV();
+  } = MainMV(setProfileId);
   const { userId } = useGlobal();
   return (
     <div className={styles.mainContainer}>
@@ -76,7 +77,12 @@ const Main: FC<MainProps> = ({ isLogged, setPage }) => {
       <div className={styles.postsContainer}>
         {[...posts].reverse().map((post) => (
           <div className={styles.post} key={post.post_id + post.post_title}>
-            <div className={styles.postCreator}>
+            <div
+              className={styles.postCreator}
+              onClick={() => setProfileId(Number(post.user_id))}
+              role="toolbar"
+              onKeyDown={() => {}}
+            >
               <div className={styles.fakeImg}></div>
 
               <h3>{post.user_name}</h3>
