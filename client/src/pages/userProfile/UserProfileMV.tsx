@@ -6,7 +6,7 @@ const UserProfileMV = (userId: number) => {
   useEffect(() => {
     const fetchProfile = async (userId: number) => {
       const response = await fetch(
-        `http://localhost:3000/api/users/fetch-profile/${userId}`,
+        `http://localhost:3000/api/users/user-profile/${userId}`,
         { credentials: "include" }
       );
       const data = await response.json();
