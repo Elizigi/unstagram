@@ -4,10 +4,13 @@ import LoginRegisterForm from "./components/loginForm/LoginRegisterForm";
 import Main from "./pages/main/Main";
 import Logo from "./components/logo/Logo";
 import { useGlobal } from "./hooks/useGlobal";
+import { pageTypes, type PageType } from "./model/pageTypes";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
   const [isLoginPage, setIsLoginPage] = useState(false);
+  const [pageSelected, setPageSelected] = useState<PageType>(pageTypes.Home);
+
   const { setUserId } = useGlobal();
   useEffect(() => {
     const checkUserAuth = async () => {
@@ -27,7 +30,7 @@ function App() {
     };
 
     checkUserAuth();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>
