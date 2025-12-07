@@ -5,11 +5,11 @@ import Main from "./pages/main/Main";
 import Logo from "./components/logo/Logo";
 import { useGlobal } from "./hooks/useGlobal";
 import { pageTypes, type PageType } from "./model/pageTypes";
+import UserProfile from "./pages/userProfile/UserProfile";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
-  const [isLoginPage, setIsLoginPage] = useState(false);
-  const [pageSelected, setPageSelected] = useState<PageType>(pageTypes.Home);
+  const [pageSelected, setPageSelected] = useState<PageType>(pageTypes.home);
 
   const { setUserId } = useGlobal();
   useEffect(() => {
@@ -35,15 +35,16 @@ function App() {
   return (
     <>
       <Logo></Logo>
-      {isLoginPage && (
+      {pageSelected === pageTypes.login && (
         <LoginRegisterForm
-          setIsLoginPage={setIsLoginPage}
           setIsLogged={setIsLogged}
+          setPage={setPageSelected}
         />
       )}
-      {!isLoginPage && (
-        <Main isLogged={isLogged} setIsLoginPage={setIsLoginPage} />
+      {pageSelected === pageTypes.home && (
+        <Main isLogged={isLogged} setPage={setPageSelected} />
       )}
+      {pageSelected === pageTypes.profile && <UserProfile userId={1} />}
     </>
   );
 }

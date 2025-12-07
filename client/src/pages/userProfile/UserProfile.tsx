@@ -1,7 +1,11 @@
+import type { FC } from "react";
 import styles from "./UserProfile.module.scss";
 import UserProfileMV from "./UserProfileMV";
 
-const UserProfile = (userId: number) => {
+interface UserProfileProps {
+  userId: number;
+}
+const UserProfile: FC<UserProfileProps> = ({ userId }) => {
   const { profileName } = UserProfileMV(userId);
   return (
     <div className={styles.profileContainer}>

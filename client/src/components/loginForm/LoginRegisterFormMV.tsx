@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { infoValidation } from "../../validation/formValidator";
 import { useGlobal } from "../../hooks/useGlobal";
+import { pageTypes, type PageType } from "../../model/pageTypes";
 
 const LoginRegisterFormMV = (
   setIsLogged: (isLogged: boolean) => void,
-  setIsLoginPage: (isLoginPage: boolean) => void
+  setPage: (page: PageType) => void
 ) => {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState("");
@@ -81,7 +82,7 @@ const LoginRegisterFormMV = (
       }
       setUserId(data.user_id);
       setIsLogged(true);
-      setIsLoginPage(false);
+      setPage(pageTypes.home);
     } catch (error) {
       console.error("Error:", error);
       setError(String(error));

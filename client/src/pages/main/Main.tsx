@@ -3,11 +3,12 @@ import styles from "./Main.module.scss";
 import MainMV from "./MainMV";
 import LikeButton from "../../components/likeButton/LikeButton";
 import { useGlobal } from "../../hooks/useGlobal";
+import { pageTypes, type PageType } from "../../model/pageTypes";
 interface MainProps {
   isLogged: boolean;
-  setIsLoginPage: (isLoginPage: boolean) => void;
+  setPage: (page: PageType) => void;
 }
-const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
+const Main: FC<MainProps> = ({ isLogged, setPage }) => {
   const {
     posts,
     postStatus,
@@ -50,7 +51,7 @@ const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
         ) : (
           <div>
             <h2>Login to post</h2>
-            <button onClick={() => setIsLoginPage(true)}>Login</button>
+            <button onClick={() => setPage(pageTypes.login)}>Login</button>
           </div>
         )}
       </div>
@@ -91,7 +92,10 @@ const Main: FC<MainProps> = ({ isLogged, setIsLoginPage }) => {
                   className={styles.followBtn}
                   onClick={() => followUser(Number(post.user_id))}
                 >
-                  {post.is_followed_by_me || currentTab === currentTabOptions.following? "unfollow" : "Follow"}
+                  {post.is_followed_by_me ||
+                  currentTab === currentTabOptions.following
+                    ? "unfollow"
+                    : "Follow"}
                 </button>
               )}
             </div>

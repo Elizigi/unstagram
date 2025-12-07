@@ -1,6 +1,6 @@
 export const pageTypes = {
-  Login: "Login",
-  Home: "Home",
-  Profile: "Profile",
+  login: "login",
+  home: "home",
+  profile: "profile",
 } as const;
 export type PageType = keyof typeof pageTypes;

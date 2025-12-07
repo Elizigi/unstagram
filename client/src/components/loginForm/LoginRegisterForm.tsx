@@ -1,13 +1,16 @@
 import type { FC } from "react";
 import styles from "./LoginRegisterForm.module.scss";
 import LoginRegisterFormMV from "./LoginRegisterFormMV";
+import type { PageType } from "../../model/pageTypes";
 interface LoginRegProps {
   setIsLogged: (isLogged: boolean) => void;
-  setIsLoginPage: (isLoginPage: boolean) => void;
+  setPage: (page: PageType) => void;
 }
-const LoginRegisterForm: FC<LoginRegProps> = ({ setIsLogged,setIsLoginPage }) => {
-  const { isRegister, setIsRegister, error, checkForm } =
-    LoginRegisterFormMV(setIsLogged,setIsLoginPage);
+const LoginRegisterForm: FC<LoginRegProps> = ({ setIsLogged, setPage }) => {
+  const { isRegister, setIsRegister, error, checkForm } = LoginRegisterFormMV(
+    setIsLogged,
+    setPage
+  );
   return (
     <div className={styles.formContainer}>
       <button onClick={() => setIsRegister(!isRegister)}>
