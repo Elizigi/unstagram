@@ -8,5 +8,6 @@ type PostData = {
 export type ProfileData = {
   user_id: number | null;
   user_name: string | null;
+  followed_by_me: boolean;
   posts: PostData[];
 };

@@ -4,6 +4,7 @@ import type { Post } from "../../model/postModel";
 const UserProfileMV = (userId: number) => {
   const [profileName, setProfileName] = useState();
   const [posts, setPosts] = useState<Post[]>([]);
+  const [isFollowed, setIsFollowed] = useState(false);
 
   useEffect(() => {
     const fetchProfile = async (userId: number) => {
@@ -16,11 +17,33 @@ const UserProfileMV = (userId: number) => {
       if (data.profile.user_name) {
         setProfileName(data.profile.user_name);
         setPosts(data.profile.posts);
+        setIsFollowed(Boolean(data.profile.followed_by_me));
       }
     };
     fetchProfile(userId);
   }, [userId]);
-  return { profileName, posts };
+
+    const followUser = async (followed_id: number) => {
+      try {
+        const response = await fetch(
+          "http://localhost:3000/api/users/user-follow",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({ followed_id }),
+          }
+        );
+        const data = await response.json();
+        if (!data.success) {
+          throw new Error("something went wrong deleting post");
+        }
+      
+      } catch (error) {
+        console.error("Error deleting post", error);
+      }
+    };
+  return { profileName, posts, isFollowed,followUser };
 };
 
 export default UserProfileMV;
