@@ -1,9 +1,9 @@
 import type { FC } from "react";
 import styles from "./Main.module.scss";
 import MainMV from "./MainMV";
-import LikeButton from "../../components/likeButton/LikeButton";
-import { useGlobal } from "../../hooks/useGlobal";
 import { pageTypes, type PageType } from "../../model/pageTypes";
+import PostComp from "../../components/post/PostComp";
+
 interface MainProps {
   isLogged: boolean;
   setPage: (page: PageType) => void;
@@ -15,14 +15,13 @@ const Main: FC<MainProps> = ({ isLogged, setPage, setProfileId }) => {
     postStatus,
     currentTab,
     currentTabOptions,
+    fetchPosts,
+    fetchFollowed,
+    setPosts,
     createPost,
-    likePost,
     logOut,
-    deletePost,
-    followUser,
     setCurrentTab,
   } = MainMV(setProfileId);
-  const { userId } = useGlobal();
   return (
     <div className={styles.mainContainer}>
       <button onClick={logOut} className={styles.logOutBtn}>
@@ -74,52 +73,15 @@ const Main: FC<MainProps> = ({ isLogged, setPage, setProfileId }) => {
           Following
         </button>
       </div>
-      <div className={styles.postsContainer}>
-        {[...posts].reverse().map((post) => (
-          <div className={styles.post} key={post.post_id + post.post_title}>
-            <div
-              className={styles.postCreator}
-              onClick={() => setProfileId(Number(post.user_id))}
-              role="toolbar"
-              onKeyDown={() => {}}
-            >
-              <div className={styles.fakeImg}></div>
-
-              <h3>{post.user_name}</h3>
-              {Number(userId) === Number(post.user_id) ? (
-                <button
-                  className={styles.deleteBtn}
-                  onClick={() => deletePost(Number(post.post_id))}
-                >
-                  Too Cringe
-                </button>
-              ) : (
-                <button
-                  className={styles.followBtn}
-                  onClick={() => followUser(Number(post.user_id))}
-                >
-                  {post.is_followed_by_me ||
-                  currentTab === currentTabOptions.following
-                    ? "unfollow"
-                    : "Follow"}
-                </button>
-              )}
-            </div>
-            <h2 className={styles.postTitle}>{post.post_title}</h2>
-            {post.post_img_url && (
-              <img src={post.post_img_url} alt={post.post_title} />
-            )}
-            <p>{post.post_description}</p>
-            {isLogged && (
-              <LikeButton
-                likes={post.likes_count}
-                liked={post.liked_by_me as number}
-                likePost={() => likePost(post.post_id)}
-              />
-            )}
-          </div>
-        ))}
-      </div>
+      <PostComp
+        posts={posts}
+        isLogged={isLogged}
+        setPosts={setPosts}
+        setProfileId={setProfileId}
+        fetchFollowed={fetchFollowed}
+        fetchPosts={fetchPosts}
+        currentTab={currentTab}
+      />
     </div>
   );
 };
