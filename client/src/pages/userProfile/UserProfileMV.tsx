@@ -23,27 +23,31 @@ const UserProfileMV = (userId: number) => {
     fetchProfile(userId);
   }, [userId]);
 
-    const followUser = async (followed_id: number) => {
-      try {
-        const response = await fetch(
-          "http://localhost:3000/api/users/user-follow",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-            body: JSON.stringify({ followed_id }),
-          }
-        );
-        const data = await response.json();
-        if (!data.success) {
-          throw new Error("something went wrong deleting post");
+  const followUser = async (followed_id: number) => {
+    const prev = isFollowed;
+
+    try {
+      setIsFollowed(!isFollowed);
+      const response = await fetch(
+        "http://localhost:3000/api/users/user-follow",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ followed_id }),
         }
-      
-      } catch (error) {
-        console.error("Error deleting post", error);
+      );
+      const data = await response.json();
+      if (!data.success) {
+        setIsFollowed(prev);
+        throw new Error("something went wrong deleting post");
       }
-    };
-  return { profileName, posts, isFollowed,followUser };
+    } catch (error) {
+      setIsFollowed(prev);
+      console.error("Error deleting post", error);
+    }
+  };
+  return { profileName, posts, isFollowed, followUser };
 };
 
 export default UserProfileMV;
