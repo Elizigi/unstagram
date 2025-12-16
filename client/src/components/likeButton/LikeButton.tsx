@@ -5,7 +5,7 @@ interface LikeButtonProps {
   likes?: number;
   likePost: () => void;
 }
-const LikeButton: FC<LikeButtonProps> = ({ liked, likes, likePost }) => {
+const LikeButton: FC<LikeButtonProps> = ({ liked, likes=0, likePost }) => {
   return (
     <div className={style.likeContainer}>
       <button
@@ -16,7 +16,7 @@ const LikeButton: FC<LikeButtonProps> = ({ liked, likes, likePost }) => {
       >
         Like
       </button>
-      {likes && <h4>{likes}</h4>}
+      {likes>0 && <h4>{likes}</h4>}
     </div>
   );
 };
