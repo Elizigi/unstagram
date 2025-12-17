@@ -1,0 +1,54 @@
+import { Request, Response } from "express";
+import { RowDataPacket } from "mysql2";
+import { pool } from "../../server";
+
+async function fetchComments(req: Request, res: Response) {
+  try {
+    const userId = req.userId;
+    if (!userId) {
+      const [result] = await pool.execute<RowDataPacket[]>(
+        "SELECT * FROM posts"
+      );
+      const allPosts = result;
+      if (allPosts.length === 0) {
+        return res
+          .status(200)
+          .json({ success: true, message: "No posts yet :/", allPosts: [] });
+      }
+      return res.status(200).json({ success: true, allPosts });
+    }
+    const [posts] = await pool.execute<RowDataPacket[]>(
+      `
+  SELECT
+    comments.*,
+    users.user_name,
+    COUNT(pl.user_id) AS likes_count,
+    SUM(pl.user_id = ?) AS liked_by_me,
+    MAX(uf.follower_id IS NOT NULL) AS is_followed_by_me
+  FROM posts
+  LEFT JOIN post_likes pl
+    ON posts.post_id = pl.post_id
+  LEFT JOIN users
+    ON posts.user_id = users.user_id
+  LEFT JOIN user_followers uf
+    ON uf.user_id = posts.user_id
+   AND uf.follower_id = ?
+  GROUP BY posts.post_id;
+  `,
+      [userId, userId]
+    );
+    if (posts.length === 0) {
+      return res
+        .status(200)
+        .json({ success: true, message: "No posts yet :/", allPosts: [] });
+    }
+    return res.status(200).json({ success: true, allPosts: posts });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "something went wrong fetching comments",
+      error,
+    });
+  }
+}
+export default fetchComments;
