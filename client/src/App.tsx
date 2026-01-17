@@ -18,7 +18,7 @@ function App() {
       try {
         const response = await fetch(
           "http://localhost:3000/api/users/user-logged",
-          { credentials: "include" }
+          { credentials: "include" },
         );
         const data = await response.json();
         if (data.user_id) {
@@ -48,7 +48,11 @@ function App() {
         />
       )}
       {pageSelected === pageTypes.home && (
-        <Main isLogged={isLogged} setPage={setPageSelected} setProfileId={setProfileId}/>
+        <Main
+          isLogged={isLogged}
+          setPage={setPageSelected}
+          setProfileId={setProfileId}
+        />
       )}
       {pageSelected === pageTypes.profile && <UserProfile userId={profileId} />}
     </>

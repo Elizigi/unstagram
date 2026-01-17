@@ -11,7 +11,7 @@ async function createPost(req: Request, res: Response) {
 
     const [postResult]: [ResultSetHeader, FieldPacket[]] = await pool.execute(
       "INSERT INTO posts(post_title,post_description,post_img_url,user_id)VALUES(?,?,?,?)",
-      [postTitle, postDescription, postUrl, userId]
+      [postTitle, postDescription, postUrl, userId],
     );
     const insertResult = postResult.insertId;
 

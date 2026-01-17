@@ -11,7 +11,7 @@ async function deletePost(req: Request, res: Response) {
     }
     const [rows] = await pool.execute<RowDataPacket[]>(
       "SELECT user_id FROM posts WHERE post_id = ?",
-      [post_id]
+      [post_id],
     );
     if (rows.length === 0) {
       return res.status(404).json({

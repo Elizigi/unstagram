@@ -7,7 +7,7 @@ async function fetchComments(req: Request, res: Response) {
     const userId = req.userId;
     if (!userId) {
       const [result] = await pool.execute<RowDataPacket[]>(
-        "SELECT * FROM posts"
+        "SELECT * FROM posts",
       );
       const allPosts = result;
       if (allPosts.length === 0) {
@@ -25,17 +25,17 @@ async function fetchComments(req: Request, res: Response) {
     COUNT(pl.user_id) AS likes_count,
     SUM(pl.user_id = ?) AS liked_by_me,
     MAX(uf.follower_id IS NOT NULL) AS is_followed_by_me
-  FROM posts
-  LEFT JOIN post_likes pl
+    FROM posts
+    LEFT JOIN post_likes pl
     ON posts.post_id = pl.post_id
-  LEFT JOIN users
+     LEFT JOIN users
     ON posts.user_id = users.user_id
   LEFT JOIN user_followers uf
     ON uf.user_id = posts.user_id
    AND uf.follower_id = ?
   GROUP BY posts.post_id;
   `,
-      [userId, userId]
+      [userId, userId],
     );
     if (posts.length === 0) {
       return res

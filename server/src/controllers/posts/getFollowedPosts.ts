@@ -7,7 +7,7 @@ async function getFollowedPosts(req: Request, res: Response) {
     const userId = req.userId;
     if (!userId) {
       const [result] = await pool.execute<RowDataPacket[]>(
-        "SELECT * FROM posts"
+        "SELECT * FROM posts",
       );
       const allPosts = result;
       if (allPosts.length === 0) {
@@ -34,7 +34,7 @@ async function getFollowedPosts(req: Request, res: Response) {
     ON posts.user_id = users.user_id
   GROUP BY posts.post_id;
   `,
-      [userId, userId]
+      [userId, userId],
     );
     if (posts.length === 0) {
       return res
